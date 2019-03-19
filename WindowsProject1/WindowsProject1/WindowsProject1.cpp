@@ -19,6 +19,20 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+typedef struct tagMYREC
+{
+	char  s1[80];
+	char  s2[80];
+	DWORD n;
+} MYREC;
+
+enum message_type
+{
+	msg_init = 0,
+	msg_test1 = 1,
+	msg_test2 = 2,
+	msg_count = 0
+};
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -168,7 +182,29 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 						MessageBox(NULL, _T("Application 2 is not launched."), _T("Note"), MB_OK);
 						return 0;
 					}
-					PostMessage(hwndAppli2, nMsg123, 1, 2);
+
+					COPYDATASTRUCT MyCDS;
+					MYREC MyRec;
+					memset(&MyRec, 0, sizeof(MYREC));
+					MyRec.n = 20;
+					for (int i = 1; i <= MyRec.n; i++)
+					{
+						MyRec.s1[i-1] = i;
+						MyRec.s2[i-1] = MyRec.n+1 -i;
+					}
+
+					//
+					// Fill the COPYDATA structure
+					// 
+					message_type msgType = msg_test1;
+					MyCDS.dwData = (ULONG_PTR)msgType;		// type de message
+					MyCDS.cbData = sizeof(MyRec);		// size of data
+					MyCDS.lpData = &MyRec;				// data structure
+
+					SendMessage(hwndAppli2, WM_COPYDATA, (WPARAM) hWnd, (LPARAM)(LPVOID)&MyCDS);
+
+
+					//SendMessage(hwndAppli2, nMsg123, 0xF0F1F2F3, 0xFFFFFFFF);
 
 					break;
 				}

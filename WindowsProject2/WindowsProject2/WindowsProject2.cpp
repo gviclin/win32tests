@@ -19,6 +19,25 @@ BOOL                InitInstance(HINSTANCE, int);
 LRESULT CALLBACK    WndProc(HWND, UINT, WPARAM, LPARAM);
 INT_PTR CALLBACK    About(HWND, UINT, WPARAM, LPARAM);
 
+typedef struct tagMYREC
+{
+	char  s1[80];
+	char  s2[80];
+	DWORD n;
+} MYREC;
+
+enum message_type
+{
+	msg_init = 0,
+	msg_test1 = 1,
+	msg_test2 = 2,
+	msg_count = 0
+
+};
+
+PCOPYDATASTRUCT pMyCDS;
+
+
 int APIENTRY wWinMain(_In_ HINSTANCE hInstance,
                      _In_opt_ HINSTANCE hPrevInstance,
                      _In_ LPWSTR    lpCmdLine,
@@ -130,7 +149,7 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
 		hWnd,
 		(HMENU)IDC_BUTTON_CLEAR, hInstance, NULL);
 
-	SetWindowText(hWndEditBox, _T("Appli 2 ready"));
+	SetWindowText(hWndEditBox, _T("Appli 2 ready\r\n"));
 
 	//Register a custom message string
 	nMsg123 = RegisterWindowMessage(_T("SendMessage123"));
@@ -159,14 +178,47 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 	if  (message == nMsg123)
 	{
 		TCHAR Buffer[1024];
-		GetWindowText(hWndEditBox, Buffer, 256);
-		wcscat_s(Buffer, _T("Message received from application 1.\r\n"));
+		TCHAR Buffer2[128];
+		GetWindowText(hWndEditBox, Buffer, 1024);
+		wcscat_s(Buffer, _T("Message received from application 1. "));
+		wsprintf(Buffer2, _T("wParam  0x%x, lParam 0x%x\r\n"), wParam, lParam);
+		wcscat_s(Buffer, Buffer2);
 		SetWindowText(hWndEditBox, Buffer);
 		return 0;
 	}
 
     switch (message)
     {
+	case WM_COPYDATA:
+	{
+		pMyCDS = (PCOPYDATASTRUCT)lParam;
+		MYREC* pData = (MYREC*) pMyCDS->lpData;
+		switch (pMyCDS->dwData)
+		{
+		case msg_test1:
+			TCHAR Buffer[1024];
+			TCHAR Buffer2[128];
+			GetWindowText(hWndEditBox, Buffer, 1024);
+			wcscat_s(Buffer, _T("Message received from application 1. "));
+			wsprintf(Buffer2, _T("nb element %n, datas "), (DWORD)pData->n);
+			wcscat_s(Buffer, Buffer2);
+			for (int i = 0; i < pData->n; i++)
+			{			
+				_itow_s(pData->s2[i], Buffer2, sizeof(Buffer2) / sizeof(TCHAR), 10);
+				wcscat_s(Buffer, Buffer2);
+				wcscat_s(Buffer, _T(" "));
+			}
+			wsprintf(Buffer2, _T("\r\n"), (DWORD)pData->n);
+			
+			wcscat_s(Buffer, Buffer2);
+			SetWindowText(hWndEditBox, Buffer);
+			/*
+			   ((LPSTR)((MYREC *)(pMyCDS->lpData))->s1,
+				(LPSTR)((MYREC *)(pMyCDS->lpData))->s2,
+				(DWORD)((MYREC *)(pMyCDS->lpData))->n);*/
+		}
+		break;
+	}
     case WM_COMMAND:
         {
             int wmId = LOWORD(wParam);

@@ -1,3 +1,19 @@
+ # dir
+WindowsProject1/.vs/
+WindowsProject1/Debug/
+WindowsProject1/WindowsProject1/Debug/
+WindowsProject1/Release/
+WindowsProject1/WindowsProject1/Release/
+WindowsProject1/x64/
+WindowsProject1/WindowsProject1/x64/
+WindowsProject2/.vs/
+WindowsProject2/Debug/
+WindowsProject2/WindowsProject2/Debug/
+WindowsProject2/Release/
+WindowsProject2/WindowsProject2/Release/
+WindowsProject2/x64/
+WindowsProject2/WindowsProject2/x64/
+
 # Prerequisites
 *.d
 
