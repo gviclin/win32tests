@@ -4,6 +4,8 @@
 #include "stdafx.h"
 #include "WindowsProject1.h"
 
+#include "TestAutoContext.h"
+
 #define MAX_LOADSTRING 100
 
 // Global Variables:
@@ -144,6 +146,14 @@ BOOL InitInstance(HINSTANCE hInstance, int nCmdShow)
    ShowWindow(hWnd, nCmdShow);
    UpdateWindow(hWnd);
 
+   CTestAutoContext context;
+
+   context.SetState(eTOD_DOWN_ABS);
+
+
+
+
+
    return TRUE;
 }
 
@@ -201,7 +211,7 @@ LRESULT CALLBACK WndProc(HWND hWnd, UINT message, WPARAM wParam, LPARAM lParam)
 					MyCDS.cbData = sizeof(MyRec);		// size of data
 					MyCDS.lpData = &MyRec;				// data structure
 
-					SendMessage(hwndAppli2, WM_COPYDATA, (WPARAM) hWnd, (LPARAM)(LPVOID)&MyCDS);
+					PostMessage(hwndAppli2, WM_COPYDATA, (WPARAM) hWnd, (LPARAM)(LPVOID)&MyCDS);
 
 
 					//SendMessage(hwndAppli2, nMsg123, 0xF0F1F2F3, 0xFFFFFFFF);

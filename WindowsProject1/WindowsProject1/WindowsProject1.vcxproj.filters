@@ -27,12 +27,48 @@
     <ClInclude Include="WindowsProject1.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="BaseState.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="Standby.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="TestAutoContext.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tod_down_abs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tod_ff.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="tod_wait_down_abs.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="stdafx.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="WindowsProject1.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="BaseState.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Standby.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="TestAutoContext.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tod_down_abs.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tod_ff.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="tod_wait_down_abs.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
